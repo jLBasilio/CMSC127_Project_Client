@@ -14,7 +14,6 @@ import AddBill from '../features/bill/AddBill';
 import DeleteBill from '../features/bill/DeleteBill';
 import SearchBill from '../features/bill/SearchBill';
 import UpdateBill from '../features/bill/UpdateBill';
-import ViewBill from '../features/bill/ViewBill';
 
 
 class App extends Component {
@@ -71,7 +70,6 @@ class App extends Component {
                       <Menu.Item as={Link} to='/deletebill' name='delete' active={this.state.activeItem === 'delete'} onClick={this.handleItemClick} />
                       <Menu.Item as={Link} to='/searchbill' name='search' active={this.state.activeItem === 'search'} onClick={this.handleItemClick} />
                       <Menu.Item as={Link} to='/updatebill' name='update' active={this.state.activeItem === 'update'} onClick={this.handleItemClick} />
-                      <Menu.Item as={Link} to='/viewbill' name='view' active={this.state.activeItem === 'view'} onClick={this.handleItemClick} />
                     </Menu.Menu>
                   </Menu.Item>
 
@@ -101,7 +99,6 @@ class App extends Component {
                       <Route path="/deletebill" component={DeleteBill} />
                       <Route path="/searchbill" component={SearchBill} />
                       <Route path="/updatebill" component={UpdateBill} />
-                      <Route path="/viewbill" component={ViewBill} />
                       <Redirect to="/" />
                     </Switch>
                 </Sidebar.Pusher>

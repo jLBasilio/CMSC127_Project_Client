@@ -10,28 +10,26 @@ class DeleteBill extends Component {
 
         this.state = {
 
-            username: "",
-            password: "",
-            validAccount: null,
+            bills: [],
+            billNoToBeDeleted: 0,
 
         }
 
-        this.handleForm = this.handleForm.bind(this);
+        this.handleFormChange = this.handleFormChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleDeleteBill = this.handleDeleteBill.bind(this);
 
     }
 
-    handleForm(e) {
+    handleFormChange(e) {
         this.setState({
-            [e.target.name]: e.target.value
+            billNoToBeDeleted: e.target.value
         });
 
     }
 
     handleSubmit(e) {
-        this.state.username === "admin" && this.state.password === "admin" ?
-            this.setState({ validAccount: true }) :
-            this.setState({ validAccount: false })
+
     }
 
     render() {

@@ -94,7 +94,6 @@ class AddBill extends Component {
     handleSubmitForm(e){
         console.log(this.state);
         this.addBill();
-        this.handleResetForm();
     }
 
 
@@ -141,7 +140,7 @@ class AddBill extends Component {
     render() {
         return (
             <Segment>
-            <Form onSubmit={this.handleSubmitForm}>
+            <Form onSubmit={this.addBill}>
                 <Form.Group widths='equal'>
                     <Form.Input
                         label='Title'
