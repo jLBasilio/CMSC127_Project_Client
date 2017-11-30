@@ -1,13 +1,25 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Grid, Segment, Form, Message, Header, Button, TextArea, Dropdown } from 'semantic-ui-react';
+import axios from 'axios';
 
-const author = [
 
-
-];
 
 class AddBill extends Component {
+
+    componentDidMount(){
+        fetch('http://localhost:3001/get-authors')
+        .then((response) => {
+            return response.json();
+        })
+        .then((result) =>{
+            this.setState({authorList: result})
+            console.log("Success fetching");
+        })
+        .catch((e) =>{
+            console.log(e);
+        })
+    }
 
     constructor(props){
 
@@ -20,8 +32,8 @@ class AddBill extends Component {
             dateFiled: "",
             longTitle: "",
             scope: "",
-            authorId: null,
-
+            authorList: [],
+            selectedAuthor: "",
         }
 
         this.handleFormChange = this.handleFormChange.bind(this);
@@ -34,7 +46,12 @@ class AddBill extends Component {
         this.setState({
             [e.target.name]: e.target.value
         });
+    }
 
+    handleAuthorChange(e){
+        this.setState({
+            selectedAuthor: e.target.value
+        });
     }
 
     handleSubmitForm(e){
@@ -51,7 +68,6 @@ class AddBill extends Component {
             dateFiled: "",
             longTitle: "",
             scope: "",
-            authorId: null,
         });
 
     }
@@ -76,16 +92,27 @@ class AddBill extends Component {
                         onChange={this.handleFormChange}
                     />
                 </Form.Group>
+                <b>Bill Type</b>
+                <select name="billType" onChange={this.handleFormChange} value={this.state.billType}>
+                    <option value="HBN">HBN</option>
+                    <option value="SBN">SBN</option>
+                </select>
+                <br />
                 <b>Scope</b>
                 <select name="scope" onChange={this.handleFormChange} value={this.state.scope}>
                     <option value="National">National</option>
                     <option value="Local">Local</option>
                 </select>
-
+                <br />
                 <b>Author</b>
-                <select name="scope" onChange={this.handleFormChange} value={this.state.scope}>
-                    <option value="National">National</option>
-                    <option value="Local">Local</option>
+                <select name="author" onChange={this.handleAuthorChange} value={this.state.selectedAuthor}>
+                    {
+                        this.state.authorList.map((key, index) => {
+                            return(
+                                <option value={key.firstName}>{key.firstName}</option>
+                            );
+                        })
+                    }
                 </select>
                 <Button
                     color='teal'

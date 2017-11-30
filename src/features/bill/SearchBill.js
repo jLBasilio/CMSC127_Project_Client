@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Grid, Segment, Form, Message, Header, Button } from 'semantic-ui-react';
+import { Grid, Segment, Form, Message, Header, Button, Dropdown, Table, Rating } from 'semantic-ui-react';
+
+
 
 class SearchBill extends Component {
 
@@ -10,33 +12,33 @@ class SearchBill extends Component {
 
         this.state = {
 
-            username: "",
-            password: "",
-            validAccount: null,
+            view: "all",
 
         }
 
-        this.handleForm = this.handleForm.bind(this);
+        this.handleFormChange = this.handleFormChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
 
     }
 
-    handleForm(e) {
+    handleFormChange(e) {
         this.setState({
             [e.target.name]: e.target.value
         });
+        console.log(this.state);
 
     }
 
     handleSubmit(e) {
-        this.state.username === "admin" && this.state.password === "admin" ?
-            this.setState({ validAccount: true }) :
-            this.setState({ validAccount: false })
+
     }
 
     render() {
         return (
-            <h2> Page for searching bills</h2>
+            <h2>Page for searching bills</h2>
+
+            
+
         );
     }
 }
