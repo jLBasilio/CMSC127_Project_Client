@@ -135,7 +135,7 @@ class AddBill extends Component {
                 secondReading: "Pending",
                 thirdReading: "Pending"
 			})
-		})	
+		})
     }
 
     render() {
