@@ -127,7 +127,7 @@ class UpdateHouseMember extends Component {
         return (
             <div>
                 <br/>
-                <h4>Edit Senator by number</h4>
+                <h2 style={{color: "teal"}}>Edit House Member By Number</h2>
                     <input type="number" name="legislatorId" placeholder="Input legislatorId" value={this.state.legislatorId} onChange={this.handleNumberChange} onFocus={this.handleFocusChange}/>
                 
                  <Table celled padded structured>

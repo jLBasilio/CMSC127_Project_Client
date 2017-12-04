@@ -56,14 +56,35 @@ class UpdateSenator extends Component {
             [e.target.name]: e.target.value
         });
         console.log(this.state);
+
+      
+
     }
 
     handleNumberChange(e) {
 
-        this.setState({
-            legislatorId: parseInt(e.target.value)
-        });
+        const legislatorNoFromUser = parseInt(e.target.value);
+
+        e.target.value && legislatorNoFromUser < this.state.senators.length ?
+            this.setState({
+                legislatorId: legislatorNoFromUser,
+                firstName: this.state.senators[legislatorNoFromUser-1].firstName,
+                middleInitial: this.state.senators[legislatorNoFromUser-1].middleInitial,
+                lastName: this.state.senators[legislatorNoFromUser-1].lastName,
+                office: this.state.senators[legislatorNoFromUser-1].office,
+                senatePosition: this.state.senators[legislatorNoFromUser-1].senatePosition,
+                directLine: this.state.senators[legislatorNoFromUser-1].directLine,
+                trunkLine: this.state.senators[legislatorNoFromUser-1].trunkLine,
+                email: this.state.senators[legislatorNoFromUser-1].email,
+                website: this.state.senators[legislatorNoFromUser-1].website,
+
+            }) :
+            this.setState({
+                legislatorId: legislatorNoFromUser,
+            })
         console.log(this.state);
+
+
     }
 
     handleFocusChange(e) {
@@ -129,10 +150,19 @@ class UpdateSenator extends Component {
         return (
             <div>
                 <br/>
-                <h4>Edit Senator by number</h4>
-                    <input type="number" name="legislatorId" placeholder="Input legislatorId" value={this.state.legislatorId} onChange={this.handleNumberChange} onFocus={this.handleFocusChange}/>
-                
-                 <Table celled padded structured>
+                <h2 style={{color: "teal"}}>Edit Senator By Number</h2>
+               
+                <Form.Input 
+                    type="number"
+                    name='legislatorId' 
+                    placeholder='Input legislatorId'
+                    value={this.state.legislatorId}
+                    onChange={this.handleNumberChange}
+                    onFocus={this.handleFocusChange}
+                />
+
+
+                <Table celled padded structured>
                 <Table.Header>
                     <Table.Row>
                         <Table.HeaderCell textAlign="center">Legislator ID</Table.HeaderCell>

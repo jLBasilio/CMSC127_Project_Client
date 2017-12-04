@@ -79,7 +79,13 @@ class SearchSenator extends Component {
             >
 
             <div>
-                <input type="number" name="SenatorNo" placeholder="Input house member no" value={this.state.senatorNo} onChange={this.senatorNo}/>
+                <Form.Input 
+                    type="number"
+                    placeholder='Input Senator No' 
+                    name='SenatorNo' 
+                    value={this.state.senatorNo}
+                    onChange={this.senatorNo}
+                />
             </div>
 
             </Grid.Column>

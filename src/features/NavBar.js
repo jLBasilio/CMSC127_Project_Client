@@ -1,9 +1,18 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, Dropdown, Input, Image, Icon, Header, Button } from 'semantic-ui-react';
+import PropTypes from 'prop-types'
+
+
+const colors = [
+    'red', 'orange', 'yellow', 'olive', 'green', 'teal',
+    'blue', 'violet', 'purple', 'pink', 'brown', 'grey', 'black',
+]
 
 class NavBar extends Component {
-    
+    static propTypes = {
+        color: PropTypes.string,
+    }
     constructor(props) {
 
         super(props)

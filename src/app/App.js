@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, withRouter, Switch, Route, Redirect, Link } from 'react-router-dom';
-import { Grid, Segment, Form, Message, Header, Button, Sidebar, Menu, Icon, Image } from 'semantic-ui-react';
+import { Accordion, Grid, Segment, Form, Message, Header, Button, Sidebar, Menu, Icon, Image, Dropdown } from 'semantic-ui-react';
 import './App.css';
 
 
 // Pages
 import NavBar from '../features/NavBar';
-import Sidenav from '../features/Sidenav';
 import Loading from '../features/auth/Loading';
 import Login from '../features/auth/Login';
 import Home from '../features/auth/Home';
@@ -40,7 +39,7 @@ class App extends Component {
       isGettingSession: false,
       user: true,
       isVisible: false,
-
+      activeIndex: -1,
     }
 
     this.handleSidebarClick = this.handleSidebarClick.bind(this);
@@ -55,6 +54,15 @@ class App extends Component {
 
   }
 
+  handleClick = (e, titleProps) => {
+    const { index } = titleProps
+    const { activeIndex } = this.state
+    const newIndex = activeIndex === index ? -1 : index
+
+    this.setState({ activeIndex: newIndex })
+  }
+
+
   render() {
     return (
       <Router history={withRouter}>
@@ -67,47 +75,67 @@ class App extends Component {
           </Switch> : 
             <div>
               <NavBar visible={this.handleSidebarClick}/>
-        
-              <Sidebar.Pushable as={Segment}>
+              <Sidebar.Pushable>
                 <Sidebar as={Menu} animation='push' width='thin' visible={this.state.isVisible} icon='labeled' vertical>
-                  <Menu.Item as={Link} to='/' name='Home'>
-                    <Icon name='cubes' />
-                    <Menu.Header>Home</Menu.Header>
-                  </Menu.Item>
-                  <Menu.Item name='Bill'>
-                    <Icon name='law' />
-                    <Menu.Header>Bill</Menu.Header>
-                    <Menu.Menu>
-                      <Menu.Item as={Link} to='/addbill' name='add' active={this.state.activeItem === 'add'} onClick={this.handleItemClick} />
-                      <Menu.Item as={Link} to='/deletebill' name='delete' active={this.state.activeItem === 'delete'} onClick={this.handleItemClick} />
-                      <Menu.Item as={Link} to='/searchbill' name='search' active={this.state.activeItem === 'search'} onClick={this.handleItemClick} />
-                      <Menu.Item as={Link} to='/updatebill' name='update' active={this.state.activeItem === 'update'} onClick={this.handleItemClick} />
-                    </Menu.Menu>
-                  </Menu.Item>
 
-                  <Menu.Item name='Senator'>
-                    <Icon name='user circle' />
-                    <Menu.Header>Senator</Menu.Header>
-                    <Menu.Menu>
-                      <Menu.Item name='add' as={Link} to='/addsenator' active={this.state.activeItem === 'add'} onClick={this.handleItemClick} />
-                      <Menu.Item name='delete' as={Link} to='/deletesenator' active={this.state.activeItem === 'delete'} onClick={this.handleItemClick} />
-                      <Menu.Item name='search' as={Link} to='/searchsenator' active={this.state.activeItem === 'search'} onClick={this.handleItemClick} />
-                      <Menu.Item name='update' as={Link} to='/updatesenator' active={this.state.activeItem === 'update'} onClick={this.handleItemClick} />
-                    </Menu.Menu>
-                  </Menu.Item>
+                  <Accordion styled>
 
-                  <Menu.Item name='House Member'>
-                    <Icon name='user circle outline' />
-                    <Menu.Header>House Member</Menu.Header>
-                    <Menu.Menu>
-                      <Menu.Item name='add' as={Link} to='/addhousemember' active={this.state.activeItem === 'add'} onClick={this.handleItemClick} />
-                      <Menu.Item name='delete' as={Link} to='/deletehousemember' active={this.state.activeItem === 'delete'} onClick={this.handleItemClick} />
-                      <Menu.Item name='search' as={Link} to='/searchhousemember' active={this.state.activeItem === 'search'} onClick={this.handleItemClick} />
-                      <Menu.Item name='update' as={Link} to='/updatehousemember' active={this.state.activeItem === 'update'} onClick={this.handleItemClick} />
-                    </Menu.Menu>
-                  </Menu.Item>
+                    <Menu.Item as={Link} to='/' name='Home'>
+                      <Icon name='cubes' />
+                      <Menu.Header>Home</Menu.Header>
+                    </Menu.Item>
+
+                    <Accordion.Title active={this.state.activeIndex === 1} index={1} onClick={this.handleClick}>
+                        <Icon name='dropdown' />
+                        <Icon name='law' />
+                        <strong>Bill</strong>
+                    </Accordion.Title>
+
+                        <Accordion.Content active={this.state.activeIndex === 1}>
+
+                          <Menu.Item as={Link} to='/addbill' name='Add Bill' icon="plus" active={this.state.activeItem === 'add'} onClick={this.handleItemClick} />
+                          <Menu.Item as={Link} to='/searchbill' name='Search Bill' icon="search" active={this.state.activeItem === 'search'} onClick={this.handleItemClick} />
+                          <Menu.Item as={Link} to='/updatebill' name='Update Bill' icon="edit" active={this.state.activeItem === 'update'} onClick={this.handleItemClick} />
+                          <Menu.Item as={Link} to='/deletebill' name='Delete Bill' icon="minus" active={this.state.activeItem === 'delete'} onClick={this.handleItemClick} />
+
+                        </Accordion.Content>
+
+
+
+
+                    <Accordion.Title active={this.state.activeIndex === 2} index={2} onClick={this.handleClick}>
+                        <Icon name='dropdown' />
+                        <Icon name='user circle' />
+                        <strong>Senator</strong>
+                    </Accordion.Title>
+
+                        <Accordion.Content active={this.state.activeIndex === 2}>
+
+                          <Menu.Item name='Add Senator' as={Link} to='/addsenator' icon="plus" active={this.state.activeItem === 'add'} onClick={this.handleItemClick} />
+                          <Menu.Item name='Search Senator' as={Link} to='/searchsenator' icon="search" active={this.state.activeItem === 'search'} onClick={this.handleItemClick} />
+                          <Menu.Item name='Update Senator' as={Link} to='/updatesenator' icon="edit" active={this.state.activeItem === 'update'} onClick={this.handleItemClick} />
+                          <Menu.Item name='Delete Senator' as={Link} to='/deletesenator' icon="minus" active={this.state.activeItem === 'delete'} onClick={this.handleItemClick} />
+                        </Accordion.Content>
+
+                    <Accordion.Title active={this.state.activeIndex === 3} index={3} onClick={this.handleClick} textAlign="left">
+                        <Icon name='dropdown' />
+                        <Icon name='user circle' />
+                        <strong>House Member</strong>
+                    </Accordion.Title>
+
+                      <Accordion.Content active={this.state.activeIndex === 3}>
+
+                      <Menu.Item name='Add House Member' as={Link} to='/addhousemember' icon="plus" active={this.state.activeItem === 'add'} onClick={this.handleItemClick} />
+                      <Menu.Item name='Search House Member' as={Link} to='/searchhousemember' icon="search" active={this.state.activeItem === 'search'} onClick={this.handleItemClick} />
+                      <Menu.Item name='Update House Member' as={Link} to='/updatehousemember' icon="edit" active={this.state.activeItem === 'update'} onClick={this.handleItemClick} />
+                      <Menu.Item name='Delete House Member' as={Link} to='/deletehousemember' icon="minus" active={this.state.activeItem === 'delete'} onClick={this.handleItemClick} />
+
+                      </Accordion.Content>
+
+                  </Accordion>
 
                 </Sidebar>
+
                 <Sidebar.Pusher>
                     <Switch>
                       <Route exact path="/" component={Home} />

@@ -140,6 +140,8 @@ class AddBill extends Component {
 
     render() {
         return (
+            <div>
+            <h2 style={{color: "teal"}}>Add Bill</h2>
             <Segment>
             <Form onSubmit={this.handleSubmitForm}>
                 <Form.Group widths='equal'>
@@ -215,7 +217,8 @@ class AddBill extends Component {
                     Clear Fields
             </Button>
             </Form>
-          </Segment >
+          </Segment>
+          </div>
         );
     }
 }

@@ -89,7 +89,7 @@ class DeleteSenator extends Component {
         return (
             <div>
                 <br/>
-                <h4>Delete Bill by number</h4>
+                <h2 style={{color: "red"}}>Delete Senator By Number</h2>
                     <input type="number" name="legislatorId" placeholder="Input legislatorId" value={this.state.legislatorId} onChange={this.handleFormChange} onFocus={this.handleFocusChange}/>
                 
                  <Table celled padded structured>

@@ -89,9 +89,16 @@ class DeleteHouseMember extends Component {
         return (
             <div>
                 <br/>
-                <h4>Delete Bill by number</h4>
-                    <input type="number" name="legislatorId" placeholder="Input legislatorId" value={this.state.legislatorId} onChange={this.handleFormChange} onFocus={this.handleFocusChange}/>
-                
+                <h2 style={{color: "red"}}>Delete House Member By Number</h2>
+                    <Form.Input 
+                        type="number"
+                        name='legislatorId' 
+                        placeholder='Input legislatorId' 
+                        value={this.state.legislatorId}
+                        onChange={this.handleFormChange}
+                        onFocus={this.handleFocusChange}
+                    />
+
                 <Table celled padded structured>
                 <Table.Header>
                     <Table.Row>
@@ -126,7 +133,7 @@ class DeleteHouseMember extends Component {
                                     {key.lastName}
                                 </Table.Cell>
                                 <Table.Cell>
-                                    {key.Office}
+                                    {key.office}
                                 </Table.Cell>
                                 <Table.Cell>
                                     {key.province}
@@ -159,7 +166,7 @@ class DeleteHouseMember extends Component {
                                     {key.lastName}
                                 </Table.Cell>
                                 <Table.Cell>
-                                    {key.Office}
+                                    {key.office}
                                 </Table.Cell>
                                 <Table.Cell>
                                     {key.province}

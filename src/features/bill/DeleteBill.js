@@ -75,7 +75,7 @@ class DeleteBill extends Component {
         return (
             <div>
                 <br/>
-                <h4>Delete Bill by number</h4>
+                <h2 style={{color: "red"}}>Delete Bill By Number</h2>
                 <Form.Input 
                     type="number"
                     placeholder='Bill number to be deleted' 

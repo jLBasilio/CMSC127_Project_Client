@@ -80,6 +80,7 @@ class SearchHouseMember extends Component {
 
             <div>
                 <input type="number" name="houseMemberNo" placeholder="Input house member no" value={this.state.houseMemberNo} onChange={this.houseMemberNoChange}/>
+                
             </div>
 
             </Grid.Column>
@@ -119,7 +120,7 @@ class SearchHouseMember extends Component {
                                     {key.lastName}
                                 </Table.Cell>
                                 <Table.Cell>
-                                    {key.Office}
+                                    {key.office}
                                 </Table.Cell>
                                 <Table.Cell>
                                     {key.province}

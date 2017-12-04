@@ -4,6 +4,22 @@ import { Grid, Segment, Form, Message, Header, Button, Table } from 'semantic-ui
 
 class UpdateBill extends Component {
 
+    componentDidMount(){
+        fetch('http://localhost:3001/get-all-bills')
+        .then((response) => {
+            return response.json();
+        })
+        .then((result) => {
+            this.setState({ bills: result })
+            console.log("Success fetch");
+        })
+        .catch((e) => {
+            console.log(e);
+        })
+    }
+
+
+
     constructor(props) {
 
         super(props)
@@ -11,7 +27,7 @@ class UpdateBill extends Component {
         this.state = {
 
             bills: [],
-            billNo: 0,
+            billNo: "",
             userInputted: false,
             successEdit: false,
             showEdit: false,
@@ -89,9 +105,24 @@ class UpdateBill extends Component {
 
     handleBillNoChange(e) {
 
-        this.setState({
-            billNo: parseInt(e.target.value)
-        });
+        const billNoFromUser = parseInt(e.target.value);
+        e.target.value && billNoFromUser < this.state.bills.length ?
+            this.setState({ 
+                billNo: billNoFromUser,
+                title: this.state.bills[billNoFromUser-1].title,
+                longTitle: this.state.bills[billNoFromUser-1].longTitle,
+                dateFiled: this.state.bills[billNoFromUser-1].dateFiled,
+                scope: this.state.bills[billNoFromUser-1].scope,
+                firstReading: this.state.bills[billNoFromUser-1].firstReading,
+                secondReading: this.state.bills[billNoFromUser-1].secondReading,
+                thirdReading: this.state.bills[billNoFromUser-1].thirdReading,
+                userInputted: true,
+
+            }) :
+            this.setState({
+                billNo: billNoFromUser,
+                userInputted: true,
+            })
         console.log(this.state);
     }
 
@@ -201,46 +232,90 @@ class UpdateBill extends Component {
         return (
             <div>
                 <br/>
-                <h4>Update Bill by number</h4>
-                <Form.Input 
-                    type="number"
-                    placeholder='Bill number to be edited' 
-                    name='billNo' 
-                    value={this.state.billNo}
-                    onChange={this.handleBillNoChange}
-                    onFocus={this.handleFocusChange}
-                />
-                <Button 
-                    onClick={this.getBillByNo}
-                    color="teal"
-                >
-                    EDIT BILL
-                </Button>
-                
+                <Grid centered textAlign="center" verticalAlign="middle">
+                    <Grid.Column
+                        
+                    >
+                    <h2 style={{color: "teal"}}>Update Bill By Nnumber</h2>
+                        <Form.Input 
+                            type="number"
+                            placeholder='Bill number to be edited' 
+                            name='billNo' 
+                            value={this.state.billNo}
+                            onChange={this.handleBillNoChange}
+                            onFocus={this.handleFocusChange}
+                        />
+                    </Grid.Column>
+                </Grid>
+
+
+
+                <Table celled padded structured>
+                <Table.Header>
+                    <Table.Row>
+                        <Table.HeaderCell rowSpan='2' textAlign="center">BillType</Table.HeaderCell>
+                        <Table.HeaderCell rowSpan='2' textAlign="center">BillNo</Table.HeaderCell>
+                        <Table.HeaderCell rowSpan='2' textAlign="center">Title</Table.HeaderCell>
+                        <Table.HeaderCell rowSpan='2' textAlign="center">Long Title</Table.HeaderCell>
+                        <Table.HeaderCell rowSpan='2' textAlign="center">Date Filed</Table.HeaderCell>
+                        <Table.HeaderCell rowSpan='2' textAlign="center">Scope</Table.HeaderCell>
+                        <Table.HeaderCell rowSpan='2' textAlign="center">Author</Table.HeaderCell>
+                        <Table.HeaderCell colSpan='3' textAlign="center">Status</Table.HeaderCell>
+                    </Table.Row>
+                    <Table.Row>
+                        <Table.HeaderCell>First Reading</Table.HeaderCell>
+                        <Table.HeaderCell>Second Reading</Table.HeaderCell>
+                        <Table.HeaderCell>Third Reading</Table.HeaderCell>
+                    </Table.Row>
+                </Table.Header>
+                <Table.Body>
                 {
-                    this.state.userInputted  ?
-                    <div>
-                    <Table celled structured>
-                        <Table.Header>
+                    this.state.billNo !== 0 && !this.state.billNo ? 
+                    this.state.bills.map((key, index) => {
+                        return(
                             <Table.Row>
-                                <Table.HeaderCell rowSpan='2' textAlign="center">BillType</Table.HeaderCell>
-                                <Table.HeaderCell rowSpan='2' textAlign="center">BillNo</Table.HeaderCell>
-                                <Table.HeaderCell rowSpan='2' textAlign="center">Title</Table.HeaderCell>
-                                <Table.HeaderCell rowSpan='2' textAlign="center">Long Title</Table.HeaderCell>
-                                <Table.HeaderCell rowSpan='2' textAlign="center">Date Filed</Table.HeaderCell>
-                                <Table.HeaderCell rowSpan='2' textAlign="center">Scope</Table.HeaderCell>
-                                <Table.HeaderCell rowSpan='2' textAlign="center">Author</Table.HeaderCell>
-                                <Table.HeaderCell colSpan='3' textAlign="center">Status</Table.HeaderCell>
+                                <Table.Cell>
+                                    {key.billType}
+                                </Table.Cell>
+                                <Table.Cell>
+                                    {key.billNo}
+                                </Table.Cell>
+                                <Table.Cell>
+                                    {key.title}
+                                </Table.Cell>
+                                <Table.Cell>
+                                    {key.longTitle}
+                                </Table.Cell>
+                                <Table.Cell>
+                                    {key.dateFiled}
+                                </Table.Cell>
+                                <Table.Cell>
+                                    {key.scope}
+                                </Table.Cell>
+                                <Table.Cell>
+                                    {key.firstName + " " + key.middleInitial + " " + key.lastName}
+                                </Table.Cell>
+                                <Table.Cell>
+                                    {
+                                        key.firstReading
+
+                                    }
+                                </Table.Cell>
+                                <Table.Cell>
+                                    {
+                                        key.secondReading 
+                                    }
+                                </Table.Cell>
+                                <Table.Cell>
+                                    {
+                                        key.thirdReading
+                                    }
+                                </Table.Cell>
                             </Table.Row>
-                            <Table.Row>
-                                <Table.HeaderCell>First Reading</Table.HeaderCell>
-                                <Table.HeaderCell>Second Reading</Table.HeaderCell>
-                                <Table.HeaderCell>Third Reading</Table.HeaderCell>
-                            </Table.Row>
-                        </Table.Header>
-                        <Table.Body>
-                            { this.state.bills.map((key, index) => {
-                                return(
+                        );
+                    })  :
+                    this.state.bills.filter(bill => bill.billNo === this.state.billNo).map((key, index) => {
+                        return(
                                     <Table.Row>
                                         <Table.Cell>
                                             {key.billType}
@@ -280,24 +355,23 @@ class UpdateBill extends Component {
                                             }
                                         </Table.Cell>
                                     </Table.Row>
-                                );
-                            }) 
-                        }
-                    </Table.Body>
-                </Table>
-
-                <Button 
-                    onClick={this.handleShowEditForms}
-                    color="teal"
-                    >
-                    CLICK TO EDIT
-                </Button>
-
-                </div>
-                :
-                console.log("")
+                        );
+                    })           
                 }
+                </Table.Body>
+            </Table>
 
+
+                {
+                    this.state.billNo !== 0 && this.state.billNo ?
+                    <Button 
+                        onClick={this.handleShowEditForms}
+                        color="teal"
+                    >EDIT</Button>
+                    :
+                    console.log("")
+
+                }
 
                 {
                     this.state.showEdit ?
